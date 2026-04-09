@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Compile C++
-        run: g++ main.cpp -o app
+        run: g++ code.cpp -o app
 
   # 3️⃣ TEST
   test:
