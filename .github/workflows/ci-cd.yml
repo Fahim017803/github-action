@@ -16,21 +16,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: g++ code.cpp -o app
+      - name: Compile
+        run: g++ .github/workflows/code.cpp -o app
 
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: g++ code.cpp -o app
-      - run: |
-          output=$(./app)
-          echo "Output: $output"
 
-          if [[ "$output" != *"Hello DevOps"* ]]; then
+      - name: Compile
+        run: g++ .github/workflows/code.cpp -o app
+
+      - name: Test
+        run: |
+          output=$(./app)
+
+          echo "Raw Output:"
+          echo "$output" | cat -A
+
+          clean_output=$(echo "$output" | xargs)
+
+          echo "Clean Output: [$clean_output]"
+
+          if [ "$clean_output" != "Hello DevOps" ]; then
             echo "Test Failed ❌"
             exit 1
+          else
+            echo "Test Passed ✅"
           fi
 
   deploy:
@@ -38,5 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: g++ code.cpp -o app
-      - run: ./app
+
+      - name: Compile
+        run: g++ .github/workflows/code.cpp -o app
+
+      - name: Deploy
+        run: ./app
