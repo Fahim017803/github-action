@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: g++ code.cpp -o app
+      - run: g++ .github/workflows/code.cpp -o app
 
   test:
     needs: build
