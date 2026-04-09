@@ -1,0 +1,28 @@
+name: Fahim Info Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  fahim-info:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Say Hello
+        run: echo "Hello DevOps"
+
+      - name: Show GitHub User
+        run: echo "Triggered by ${{ github.actor }}"
+
+      - name: Show OS Info
+        run: uname -a
+
+      - name: Check Python
+        run: python --version
+
+      - name: Check Docker
+        run: docker --version
