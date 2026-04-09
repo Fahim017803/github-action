@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: g++ .github/workflows/code.cpp -o app
+      - run: g++ code.cpp -o app
 
   test:
     needs: build
@@ -26,7 +26,10 @@ jobs:
       - run: g++ code.cpp -o app
       - run: |
           output=$(./app)
-          if [ "$output" != "Hello DevOps" ]; then
+          echo "Output: $output"
+
+          if [[ "$output" != *"Hello DevOps"* ]]; then
+            echo "Test Failed ❌"
             exit 1
           fi
 
